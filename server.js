@@ -121,6 +121,7 @@ export default function(opt) {
 
     server.on('request', (req, res) => {
         // without a hostname, we won't know who the request is for
+        console.log('client connected')
         const hostname = req.headers.host;
         if (!hostname) {
             res.statusCode = 400;
@@ -129,6 +130,7 @@ export default function(opt) {
         }
 
         const clientId = GetClientIdFromHostname(hostname);
+        console.log(`Client id connected: ${clientId}`)
         if (!clientId) {
             appCallback(req, res);
             return;
@@ -145,6 +147,7 @@ export default function(opt) {
     });
 
     server.on('upgrade', (req, socket, head) => {
+        console.log(`Client id connected: upgrade`)
         const hostname = req.headers.host;
         if (!hostname) {
             socket.destroy();
@@ -152,12 +155,14 @@ export default function(opt) {
         }
 
         const clientId = GetClientIdFromHostname(hostname);
+        console.log(`Client id connected upgrade: ${clientId}`)
         if (!clientId) {
             socket.destroy();
             return;
         }
 
         const client = manager.getClient(clientId);
+        console.log(`Client id connected: ${client.clientId}`)
         if (!client) {
             socket.destroy();
             return;
