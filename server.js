@@ -121,7 +121,7 @@ export default function(opt) {
 
     server.on('request', (req, res) => {
         // without a hostname, we won't know who the request is for
-        console.log('client connected')
+        console.log('client connected -1')
         const hostname = req.headers.host;
         if (!hostname) {
             res.statusCode = 400;
@@ -130,7 +130,7 @@ export default function(opt) {
         }
 
         const clientId = GetClientIdFromHostname(hostname);
-        console.log(`Client id connected: ${clientId}`)
+        console.log(`Client id connected -2: ${clientId}`)
         if (!clientId) {
             appCallback(req, res);
             return;
@@ -138,6 +138,7 @@ export default function(opt) {
 
         const client = manager.getClient(clientId);
         if (!client) {
+            console.log(`404`)
             res.statusCode = 404;
             res.end('404');
             return;
