@@ -56,13 +56,13 @@ export default function(opt) {
     // root endpoint
     app.use(async (ctx, next) => {
         const path = ctx.request.path;
-
+        console.log('root endpint: new request');
         // skip anything not on the root path
         if (path !== '/') {
             await next();
             return;
         }
-
+        console.log('1111111111111');
         const isNewClientRequest = ctx.query['new'] !== undefined;
         if (isNewClientRequest) {
             const reqId = hri.random();
