@@ -59,12 +59,14 @@ export default function(opt) {
         console.log('root endpint: new request');
         // skip anything not on the root path
         if (path !== '/') {
+            console.log(`path: ${path}`);
             await next();
             return;
         }
         console.log('1111111111111');
         const isNewClientRequest = ctx.query['new'] !== undefined;
         if (isNewClientRequest) {
+            console.log('new request');
             const reqId = hri.random();
             debug('making new client with id %s', reqId);
             const info = await manager.newClient(reqId);
